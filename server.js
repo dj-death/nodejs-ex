@@ -165,7 +165,10 @@ if (config.server.uploadEnabled) {
         });
 
         form.on('fileBegin', function (name, file) {
-            const [fileName, fileExt] = file.name.split('.');
+            var splits = file.name.split('.'),
+				fileName = splits[0],
+				fileExt = splits[1];
+				
             var uploadName, dt;
 
             if (!fileExt.match('doc')) {
