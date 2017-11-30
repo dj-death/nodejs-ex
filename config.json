@@ -25,7 +25,7 @@
         "apiUrl": "/api",
         "classRouteUrl": "/api",
         "classPath": "/api",
-        "server": "http://nodejs-ex-sse.193b.starter-ca-central-1.openshiftapps.com",
+        "server": "nodejs-ex-sse.193b.starter-ca-central-1.openshiftapps.com",
         "port": "80",
         "protocol": "http",
         "timeout": 30000,
