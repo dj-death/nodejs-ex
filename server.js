@@ -70,7 +70,7 @@ function onListening() {
 var data = require('./utils/data.js');
 	
 // Override main config (config.json) with potential local config (config.local.json): that's
-config["direct"]["server"] = ip;
+config["direct"]["server"] = "http://nodejs-ex-sse.193b.starter-ca-central-1.openshiftapps.com/";
 config["direct"]["port"] = port;
 
 config["database"]["config"]["host"] = process.env.OPENSHIFT_MYSQL_DB_HOST || ip;
