@@ -99,6 +99,13 @@ if (config.cors && config.cors.enabled) {
 var directApi = direct.initApi(config.direct);
 var directRouter = direct.initRouter(config.direct);
 
+app.get('init', function(req, res, next) {
+    // schedule dataset reset
+    cron.schedule(config.cron.reset, function() {
+        data.reset();
+    });
+});
+
 // GET method returns API
 app.get(config.direct.apiUrl, function(req, res, next) {
     try{
