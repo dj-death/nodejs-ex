@@ -71,7 +71,6 @@ var data = require('./utils/data.js');
 	
 // Override main config (config.json) with potential local config (config.local.json): that's
 config["direct"]["server"] = "sse-api.193b.starter-ca-central-1.openshiftapps.com";
-config["database"]["config"]["host"] = process.env.OPENSHIFT_MYSQL_DB_HOST || ip;
 
 
 config.client.path = path.join(config.client.path, 'build', 'production', 'App');
