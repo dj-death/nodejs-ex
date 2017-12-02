@@ -9,7 +9,7 @@ var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
 
-var sequelize = new Sequelize('mysql://mysql:3306/information_schema', {
+var sequelize = new Sequelize('information_schema', 'root', 'didi', {
 	"dialect": "mysql",
 	"username": "root",
 	"password": "didi",

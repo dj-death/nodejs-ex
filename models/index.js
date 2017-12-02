@@ -10,7 +10,7 @@ var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
 
 
-var sequelize = new Sequelize('mysql://mysql:3306/sse', {
+var sequelize = new Sequelize('sse', 'root', 'didi', {
 	"dialect": "mysql",
 	"username": "sse",
 	"password": "didi",
