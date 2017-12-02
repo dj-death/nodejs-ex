@@ -15,6 +15,8 @@ config["password"] = process.env.OPENSHIFT_MYSQL_DB_PASSWORD;
 config.config["host"] = 'mysql' || process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1';
 config.config["port"] = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;*/
 
+config.config["host"] = 'mysql';
+
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db = {};
 

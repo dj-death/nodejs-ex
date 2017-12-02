@@ -107,7 +107,7 @@ app.get('/mysql', function(req, res) {
 	.then(function(records) {				
         res.status(200).json({success: true, result: records});
     }).catch(function(err) {
-        res.status(400).json({success: false, err: err, other: process.env});
+        res.status(400).json({success: false, err: err, other: config.database});
     });
 });
 
