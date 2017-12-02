@@ -11,8 +11,8 @@ var env = process.env.NODE_ENV || "development";
 var config = require(path.join(__dirname, '..', 'config.json')).database;
 
 config['database'] = "information_schema";
-config.config["host"] = process.env.MYSQL_SERVICE_HOST || 'localhost',
-config.config["port"] = process.env.MYSQL_SERVICE_PORT || "3306",
+//config.config["host"] = process.env.MYSQL_SERVICE_HOST || 'localhost',
+//config.config["port"] = process.env.MYSQL_SERVICE_PORT || "3306",
 
 
 var sequelize2 = new Sequelize(config.database, config.username, config.password, config);

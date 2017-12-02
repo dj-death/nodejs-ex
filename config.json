@@ -47,8 +47,8 @@
 
         "config": {
             "dialect": "mysql",
-            "host": "",
-            "port": "",
+            "host": "mysql-2-xx2bt",
+            "port": "3306",
             "pool": {
                 "max": 50,
                 "min": 0,
