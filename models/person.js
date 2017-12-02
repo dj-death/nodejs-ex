@@ -3,7 +3,7 @@
 var errors = require('../utils/errors.js');
 
 module.exports = function(sequelize, DataTypes) {
-    var Model = sequelize.define("Person", {
+    var Model = sequelize.define("people", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,

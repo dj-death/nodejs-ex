@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-    var Model = sequelize.define("Indicator", {
+    var Model = sequelize.define("indicators", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
