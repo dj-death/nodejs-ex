@@ -107,7 +107,7 @@ app.get('/mysql', function(req, res) {
 	.then(function(records) {				
         res.status(200).json({success: true, result: records});
     }).catch(function(err) {
-        res.status(400).json({success: false, err: err});
+        res.status(400).json({success: false, err: err, other: [process.env.OPENSHIFT_MYSQL_DB_USERNAME, process.env.OPENSHIFT_MYSQL_DB_PASSWORD, process.env.OPENSHIFT_MYSQL_DB_HOST, process.env.OPENSHIFT_MYSQL_DB_PORT]});
     });
 });
 
