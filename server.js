@@ -26,6 +26,38 @@ var debug = require('debug')('server:server');
 app.set('port', port);
 
 
+var mysql = require('mysql');
+//app configuration
+var ipaddr = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
+//mysql configuration
+var mysqlHost = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost';
+var mysqlPort = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;
+var mysqlUser = 'root'; //mysql username
+var mysqlPass = 'didi'; //mysql password
+var mysqlDb   = 'sse'; //mysql database name
+var mysqlString = 'mysql://'   + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':' + mysqlPort + '/' + mysqlDb;
+
+//connect to mysql
+var mysqlClient = mysql.createConnection(mysqlString);
+mysqlClient.connect(function(err){
+  if (err) console.log(err);
+});
+
+
+//MySQL is running!
+app.get('/my', function(req, res) {
+  mysqlClient.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+    if (err) {
+      res.send('NOT OK' + JSON.stringify(err));
+    } else {
+      res.send('OK: ' + rows[0].solution + ' MySQL running at mysql://[user:password]@' + mysqlHost + ':' + mysqlPort + '/nodejs');
+    }
+  });
+});
+
+
 /**
  * Event listener for HTTP server "error" event.
  */
