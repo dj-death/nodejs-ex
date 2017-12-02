@@ -28,23 +28,6 @@ app.set('port', port);
 
 
 
-//MySQL is running!
-app.get('/my', function(req, res) {
-  
-  var html = "<html><body>Host: " + process.env.OPENSHIFT_MYSQL_DB_HOST + "<br />";
-	html += "Port: " + process.env.OPENSHIFT_MYSQL_DB_PORT + "<br />";
-	html += "User: " + process.env.OPENSHIFT_MYSQL_DB_USERNAME + "<br />";
-	html += "Pass: " + process.env.OPENSHIFT_MYSQL_DB_PASSWORD + "<br />";
-	html += "Sock: " + process.env.OPENSHIFT_MYSQL_DB_SOCK + "<br />";
-	html += "URL: " + process.env.OPENSHIFT_MYSQL_DB_URL + "<br />";
-	html += "</body></html>"
-
-
-    res.setHeader('Content-Type', 'text/html');
-    res.send(html);
-		
-});
-
 
 /**
  * Event listener for HTTP server "error" event.
@@ -92,7 +75,7 @@ function onListening() {
 var data = require('./utils/data.js');
 	
 // Override main config (config.json) with potential local config (config.local.json): that's
-config["direct"]["server"] = "sse-sseapi.193b.starter-ca-central-1.openshiftapps.com";
+config["direct"]["server"] = "sse-sse.193b.starter-ca-central-1.openshiftapps.com";
 
 
 config.client.path = path.join(config.client.path, 'build', 'production', 'App');
@@ -127,7 +110,7 @@ app.get('/mysql', function(req, res) {
 	.then(function(records) {				
         res.status(200).json({success: true, result: records});
     }).catch(function(err) {
-        res.status(400).json({success: false, err: err, other: process.env});
+        res.status(400).json({success: false, err: err});
     });
 });
 

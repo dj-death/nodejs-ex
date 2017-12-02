@@ -25,7 +25,7 @@
         "apiUrl": "/api",
         "classRouteUrl": "/api",
         "classPath": "/api",
-        "server": "sse-sseapi.193b.starter-ca-central-1.openshiftapps.com",
+        "server": "sse-sse.193b.starter-ca-central-1.openshiftapps.com",
         "port": "80",
         "protocol": "http",
         "timeout": 30000,
@@ -36,6 +36,33 @@
         "enableMetadata": true,
         "responseHelper": true
     },
+
+    "database": {
+        "dialect": "mysql",
+
+        "username": "sse",
+        "password": "didi",
+		
+        "database": "sse",
+
+        "host": "mysql",
+		"port": "3306",
+		"pool": {
+			"max": 50,
+			"min": 0,
+			"idle": 10000
+		},
+
+        "logging": false,
+		
+        "define": {
+            "createdAt": "created",
+            "updatedAt": "updated",
+            "deletedAt": "deleted",
+            "underscored": true
+        }
+    },
+
 
     "session": {
         "secret": "62P59nE68F38q0q2wvHho58oR38aY7U9",
