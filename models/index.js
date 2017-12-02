@@ -27,8 +27,8 @@ var sequelize = new Sequelize('sse', 'root', 'didi', {
 
         "config": {
             "dialect": "mysql",
-            "host": process.env.MYSQL_DB_HOST || process.env.OPENSHIFT_MYSQL_DB_HOST || "127.0.0.1",
-            "port": process.env.MYSQL_DB_PORT || process.env.OPENSHIFT_MYSQL_DB_PORT || 3307,
+            "host": "127.0.0.1",
+            "port": "3306",
             "pool": {
                 "max": 50,
                 "min": 0,
@@ -42,7 +42,8 @@ var sequelize = new Sequelize('sse', 'root', 'didi', {
             "updatedAt": "updated",
             "deletedAt": "deleted",
             "underscored": true
-        });
+        }
+});
 var db = {};
 
 fs.readdirSync(__dirname)
