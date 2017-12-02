@@ -40,14 +40,14 @@
     "database": {
         "dialect": "mysql",
 
-        "username": "root",
+        "username": "sse",
         "password": "didi",
 		
         "database": "sse",
 
         "config": {
             "dialect": "mysql",
-            "host": "mysql",
+            "host": "172.30.231.207",
             "port": 3306,
             "pool": {
                 "max": 50,
