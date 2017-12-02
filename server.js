@@ -134,7 +134,7 @@ app.get('/mysql', function(req, res) {
 	.then(function(result) {
 		var data = result[0];
 		
-		res.status(200).json({success: true, result: data});
+		res.status(200).json({success: true, results: data});
 
 	}).catch(function(err) {
 		res.status(400).json({success: false, err: err});
