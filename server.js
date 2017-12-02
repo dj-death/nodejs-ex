@@ -103,6 +103,10 @@ app.get('init', function(req, res, next) {
     // schedule dataset reset
     cron.schedule(config.cron.reset, function() {
         data.reset();
+		res.status(200).json({
+			success: true,
+			msg: "init success"
+		});
     });
 });
 
