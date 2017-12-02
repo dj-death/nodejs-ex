@@ -47,7 +47,7 @@
 
         "config": {
             "dialect": "mysql",
-            "host": "",
+            "host": "mysql",
             "port": 3306,
             "pool": {
                 "max": 50,
