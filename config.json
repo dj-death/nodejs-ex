@@ -25,7 +25,7 @@
         "apiUrl": "/api",
         "classRouteUrl": "/api",
         "classPath": "/api",
-        "server": "sse-api.193b.starter-ca-central-1.openshiftapps.com",
+        "server": "sse-sseapi.193b.starter-ca-central-1.openshiftapps.com",
         "port": "80",
         "protocol": "http",
         "timeout": 30000,

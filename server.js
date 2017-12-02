@@ -70,7 +70,7 @@ function onListening() {
 var data = require('./utils/data.js');
 	
 // Override main config (config.json) with potential local config (config.local.json): that's
-config["direct"]["server"] = "sse-api.193b.starter-ca-central-1.openshiftapps.com";
+config["direct"]["server"] = "sse-sseapi.193b.starter-ca-central-1.openshiftapps.com";
 
 
 config.client.path = path.join(config.client.path, 'build', 'production', 'App');
