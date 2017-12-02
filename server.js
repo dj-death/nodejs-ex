@@ -26,7 +26,30 @@ var debug = require('debug')('server:server');
 app.set('port', port);
 
 
+var Sequelize = require("sequelize");
 
+var sequelize2 = new Sequelize('information_schema', 'root', 'didi', {
+	"dialect": "mysql",
+	"username": "root",
+	"password": "didi",
+	
+	"database": "information_schema",
+	"host": "mysql",
+	"port": "3306",
+	"pool": {
+		"max": 50,
+		"min": 0,
+		"idle": 10000
+	},
+	
+	"logging": false,
+	"define": {
+		"createdAt": "created",
+		"updatedAt": "updated",
+		"deletedAt": "deleted",
+		"underscored": true
+	}
+});
 
 
 /**
@@ -75,7 +98,7 @@ function onListening() {
 var data = require('./utils/data.js');
 	
 // Override main config (config.json) with potential local config (config.local.json): that's
-config["direct"]["server"] = "sse-sse.193b.starter-ca-central-1.openshiftapps.com";
+config["direct"]["server"] = "api-sse.193b.starter-ca-central-1.openshiftapps.com";
 
 
 config.client.path = path.join(config.client.path, 'build', 'production', 'App');
@@ -106,12 +129,16 @@ var directRouter = direct.initRouter(config.direct);
 //MySQL is running!
 app.get('/mysql', function(req, res) {
 		
-    return models.Person.findAll()
-	.then(function(records) {				
-        res.status(200).json({success: true, result: records});
-    }).catch(function(err) {
-        res.status(400).json({success: false, err: err});
-    });
+	
+	return sequelize2.query('SELECT TABLE_NAME as "tablename", UPDATE_TIME as "update_time", UPDATE_TIME as "create_time" FROM tables WHERE TABLE_SCHEMA = "sse" ')
+	.then(function(result) {
+		var data = result[0];
+		
+		res.status(200).json({success: true, result: data});
+
+	}).catch(function(err) {
+		res.status(400).json({success: false, err: err});
+	});
 });
 
 
