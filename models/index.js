@@ -12,7 +12,7 @@ var env = process.env.NODE_ENV || "development";
 
 var sequelize = new Sequelize('sse', 'root', 'didi', {
 	"dialect": "mysql",
-	"username": "sse",
+	"username": "root",
 	"password": "didi",
 	
 	"database": "sse",
