@@ -98,16 +98,17 @@ if (config.cors && config.cors.enabled) {
 var directApi = direct.initApi(config.direct);
 var directRouter = direct.initRouter(config.direct);
 
-app.get('init', function(req, res, next) {
-    // schedule dataset reset
-    cron.schedule(config.cron.reset, function() {
-        data.reset();
-		res.status(200).json({
-			success: true,
-			msg: "init success"
-		});
-    });
+//MySQL is running!
+app.get('/mysql', function(req, res) {
+  mysqlClient.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+    if (err) {
+      res.send('NOT OK' + JSON.stringify(err));
+    } else {
+      res.send('OK: ' + rows[0].solution);
+    }
+  });
 });
+
 
 // GET method returns API
 app.get(config.direct.apiUrl, function(req, res, next) {

@@ -12,8 +12,8 @@ var config = require(path.join(__dirname, '..', 'config.json')).database;
 
 config["username"] = process.env.OPENSHIFT_MYSQL_DB_USERNAME;
 config["password"] = process.env.OPENSHIFT_MYSQL_DB_PASSWORD;
-config.config["host"] = process.env.OPENSHIFT_MYSQL_DB_HOST;
-config.config["port"] = process.env.OPENSHIFT_MYSQL_DB_PORT;
+config.config["host"] = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1';
+config.config["port"] = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;
 
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db = {};
