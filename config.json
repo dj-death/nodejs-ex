@@ -40,8 +40,8 @@
     "database": {
         "dialect": "mysql",
 
-        "username": "",
-        "password": "",
+        "username": "root",
+        "password": "didi",
 		
         "database": "sse",
 
