@@ -8,17 +8,31 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
-var config = require(path.join(__dirname, '..', 'config.json')).database;
 
-/*config["username"] = process.env.OPENSHIFT_MYSQL_DB_USERNAME;
-config["password"] = process.env.OPENSHIFT_MYSQL_DB_PASSWORD;
-config.config["host"] = 'mysql' || process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1';
-config.config["port"] = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;*/
 
-//config.config["host"] = process.env.MYSQL_SERVICE_HOST || 'localhost',
-//config.config["port"] = process.env.MYSQL_SERVICE_PORT || "3306",
+var sequelize = new Sequelize('mysql://mysql:3306/sse', {
+	"dialect": "mysql",
+	"username": "sse",
+	"password": "didi",
+	
+	"database": "sse",
+	"host": "mysql",
+	"port": "3306",
+	"pool": {
+		"max": 50,
+		"min": 0,
+		"idle": 10000
+	},
+	
+	"logging": false,
+	"define": {
+		"createdAt": "created",
+		"updatedAt": "updated",
+		"deletedAt": "deleted",
+		"underscored": true
+	}
+});
 
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db = {};
 
 fs.readdirSync(__dirname)
