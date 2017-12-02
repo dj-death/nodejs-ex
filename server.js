@@ -100,13 +100,13 @@ var directRouter = direct.initRouter(config.direct);
 
 //MySQL is running!
 app.get('/mysql', function(req, res) {
-  mysqlClient.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-    if (err) {
-      res.send('NOT OK' + JSON.stringify(err));
-    } else {
-      res.send('OK: ' + rows[0].solution);
-    }
-  });
+		
+    return models.Person.findAll()
+	.then(function(records) {				
+        res.status(200).json({success: true, result: records});
+    }).catch(function(err) {
+        res.status(400).json({success: false});
+    });
 });
 
 
