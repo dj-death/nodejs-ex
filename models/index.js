@@ -17,7 +17,32 @@ config.config["port"] = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;*/
 
 config.config["host"] = 'mysql';
 
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var sequelize = new Sequelize('sse', 'root', 'didi', {
+        "dialect": "mysql",
+
+        "username": "root",
+        "password": "didi",
+		
+        "database": "sse",
+
+        "config": {
+            "dialect": "mysql",
+            "host": process.env.MYSQL_DB_HOST || process.env.OPENSHIFT_MYSQL_DB_HOST || "127.0.0.1",
+            "port": process.env.MYSQL_DB_PORT || process.env.OPENSHIFT_MYSQL_DB_PORT || 3307,
+            "pool": {
+                "max": 50,
+                "min": 0,
+                "idle": 10000
+            }
+        },
+
+        "logging": false,
+        "define": {
+            "createdAt": "created",
+            "updatedAt": "updated",
+            "deletedAt": "deleted",
+            "underscored": true
+        });
 var db = {};
 
 fs.readdirSync(__dirname)
