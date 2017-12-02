@@ -25,7 +25,7 @@
         "apiUrl": "/api",
         "classRouteUrl": "/api",
         "classPath": "/api",
-        "server": "sse-sse.193b.starter-ca-central-1.openshiftapps.com",
+        "server": "sse-api.193b.starter-ca-central-1.openshiftapps.com",
         "port": "80",
         "protocol": "http",
         "timeout": 30000,
@@ -46,7 +46,7 @@
 
         "config": {
             "dialect": "mysql",
-            "host": "127.0.0.1",
+            "host": "10.129.14.1",
             "port": 3306,
             "pool": {
                 "max": 50,
