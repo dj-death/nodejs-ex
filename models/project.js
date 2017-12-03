@@ -660,6 +660,9 @@ module.exports = function(sequelize, DataTypes) {
 
     }, {
         timestamps: false,
+		
+		freezeTableName: true,
+		tableName: 'projects',
 
         hooks: {
 			afterUpdate: function (instance, options) {
