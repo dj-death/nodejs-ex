@@ -2,7 +2,7 @@
 
 
 module.exports = function(sequelize, DataTypes) {
-    var Model = sequelize.define("recommandations", {
+    var Model = sequelize.define("Recommandation", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,

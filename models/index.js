@@ -8,31 +8,8 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
-
-
-var sequelize = new Sequelize('sse', 'root', 'didi', {
-	"dialect": "mysql",
-	"username": "root",
-	"password": "didi",
-	
-	"database": "sse",
-	"host": "mysql",
-	"port": "3306",
-	"pool": {
-		"max": 50,
-		"min": 0,
-		"idle": 10000
-	},
-	
-	"logging": false,
-	"define": {
-		"createdAt": "created",
-		"updatedAt": "updated",
-		"deletedAt": "deleted",
-		"underscored": true
-	}
-});
-
+var config = require(path.join(__dirname, '..', 'config.json')).database;
+var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db = {};
 
 fs.readdirSync(__dirname)

@@ -3,7 +3,7 @@
 var errors = require('../utils/errors.js');
 
 module.exports = function(sequelize, DataTypes) {
-    var Model = sequelize.define("people", {
+    var Model = sequelize.define("Person", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -75,6 +75,10 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     }, {
+		
+		freezeTableName: true,
+		tableName: 'people',
+		
         defaultScope: {
             attributes: {
                 exclude: ['password']
