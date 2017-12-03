@@ -126,6 +126,10 @@ module.exports = function(sequelize, DataTypes) {
 
 
     }, {
+		
+		freezeTableName: true,
+		tableName: 'visits',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Mission, { as: 'mission', constraints: false });

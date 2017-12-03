@@ -11,7 +11,10 @@ module.exports = function(sequelize, DataTypes) {
                 isUUID: 4
             }
         }
-    });
+    }, {
+		freezeTableName: true,
+		tableName: 'riskproducts'
+	});
 
     return Model;
 };

@@ -109,6 +109,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
+		freezeTableName: true,
+		tableName: 'finances',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Partner, { as: 'partner' });

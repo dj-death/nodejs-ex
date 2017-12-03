@@ -276,6 +276,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     }, {
+		freezeTableName: true,
+		tableName: 'products',
+		
         timestamps: false,
 
         classMethods: {

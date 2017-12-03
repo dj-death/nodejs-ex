@@ -54,6 +54,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
+		freezeTableName: true,
+		tableName: 'missions',
+		
         classMethods: {
             associate: function(models) {
                 // http://stackoverflow.com/a/37817966

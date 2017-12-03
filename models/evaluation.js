@@ -191,6 +191,10 @@ module.exports = function(sequelize, DataTypes) {
 
     }, {
         timestamps: false,
+		
+		freezeTableName: true,
+		tableName: 'evaluations',
+		
 
         hooks: {
 			afterUpdate: function (instance, options) {

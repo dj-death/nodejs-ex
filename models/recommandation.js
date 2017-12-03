@@ -75,6 +75,9 @@ module.exports = function(sequelize, DataTypes) {
 
 
     }, {
+		freezeTableName: true,
+		tableName: 'recommandations',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Visit, { as: 'visit' });

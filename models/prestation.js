@@ -28,6 +28,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
+		freezeTableName: true,
+		tableName: 'prestations',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Project, { as: 'project', constraints: true });

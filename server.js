@@ -141,9 +141,7 @@ app.get('/mysql', function(req, res) {
 		res.status(400).json({success: false, err: err});
 	});*/
 	
-	return models.Project.findAndCount(
-			helpers.sequelizify(params, models.Project)
-	).then(function(result) {
+	return models.Project.findAll().then(function(result) {
 		
 		res.status(200).json({success: true, results: result.rows});
 

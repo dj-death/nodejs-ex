@@ -43,6 +43,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     }, {
+		freezeTableName: true,
+		tableName: 'risks',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsToMany(models.Product, {through: models.RiskProducts, as: 'products'});
