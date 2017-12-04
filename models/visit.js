@@ -140,8 +140,8 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM recommandations WHERE recommandations.visit_id = visit.id)'), 'recommandationscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = (SELECT products.id FROM products WHERE products.id = visit.product_id))'), 'projectscount']
+                            [sequelize.literal('(SELECT COUNT(*) FROM recommandations WHERE recommandations.visit_id = Visit.id)'), 'recommandationscount'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = (SELECT products.id FROM products WHERE products.id = Visit.product_id))'), 'projectscount']
                         ]
                     },
 
