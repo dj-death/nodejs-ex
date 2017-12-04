@@ -139,15 +139,7 @@ app.get('/mysql', function(req, res) {
 
 	}).catch(function(err) {
 		res.status(400).json({success: false, err: err});
-	});/*
-	
-	return models.Product.findAll().then(function(result) {
-		
-		res.status(200).json({success: true, results: result});
-
-	}).catch(function(err) {
-		res.status(400).json({success: false, err: err});
-	});*/
+	});
 });
 
 
