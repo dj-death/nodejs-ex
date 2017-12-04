@@ -29,12 +29,12 @@ app.set('port', port);
 
 var Sequelize = require("sequelize");
 
-var sequelize2 = new Sequelize('information_schema', 'root', 'didi', {
+var sequelize2 = new Sequelize("sse" /*'information_schema'*/, 'root', 'didi', {
 	"dialect": "mysql",
 	"username": "root",
 	"password": "didi",
 	
-	"database": "information_schema",
+	"database": "sse", //"information_schema",
 	"host": "mysql",
 	"port": "3306",
 	"pool": {
@@ -131,7 +131,7 @@ var directRouter = direct.initRouter(config.direct);
 app.get('/mysql', function(req, res) {
 		
 	
-	return sequelize2.query('SELECT TABLE_NAME as "tablename", UPDATE_TIME as "update_time", UPDATE_TIME as "create_time" FROM tables WHERE TABLE_SCHEMA = "sse" ')
+	/*return sequelize2.query('SELECT TABLE_NAME as "tablename", UPDATE_TIME as "update_time", UPDATE_TIME as "create_time" FROM tables WHERE TABLE_SCHEMA = "sse" ')
 	.then(function(result) {
 		var data = result[0];
 		
@@ -139,7 +139,16 @@ app.get('/mysql', function(req, res) {
 
 	}).catch(function(err) {
 		res.status(400).json({success: false, err: err});
-	});
+	});*/
+	
+	return models.Visit.scope('nested').findAndCount(helpers.sequelizify({}, models.Visit))
+        .then(function(result) {
+ 
+			res.status(200).json({success: true, results: result});
+			
+        }).catch(function(err) {
+            res.status(400).json({success: false, err: err});
+        });
 });
 
 
