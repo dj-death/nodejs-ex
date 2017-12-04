@@ -321,13 +321,13 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM Products WHERE Products.partner_id = Partner.id)'), 'productscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur = Partner.name)'), 'projectscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur = Partner.name AND Projects.statut = "Opérationnel")'), 'nb_projects_operationnels'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur = Partner.name AND Projects.en_cours = TRUE)'), 'nb_projects_encours'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur = Partner.name AND Projects.en_souffrance = TRUE)'), 'nb_projects_ensouffrance'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM products WHERE products.partner_id = Partner.id)'), 'productscount'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur = Partner.name)'), 'projectscount'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur = Partner.name AND projects.statut = "Opérationnel")'), 'nb_projects_operationnels'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur = Partner.name AND projects.en_cours = TRUE)'), 'nb_projects_encours'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur = Partner.name AND projects.en_souffrance = TRUE)'), 'nb_projects_ensouffrance'],
 
-                            [sequelize.literal('(SELECT SUM(part_INDH) FROM Projects WHERE Projects.porteur = Partner.name)'), 'INDH_contributions']
+                            [sequelize.literal('(SELECT SUM(part_INDH) FROM projects WHERE projects.porteur = Partner.name)'), 'INDH_contributions']
                         ]
                     },
 
