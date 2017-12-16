@@ -103,6 +103,8 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
+        
+        tableName: 'productfinances',        
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Product, { as: 'product' });

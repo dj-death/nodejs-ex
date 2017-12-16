@@ -644,6 +644,7 @@ module.exports = function(sequelize, DataTypes) {
 
 
     }, {
+        tableName: 'visits',
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Mission, { as: 'mission', constraints: false });
@@ -654,8 +655,8 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM Recommandations WHERE Recommandations.visit_id = Visit.id)'), 'recommandationscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = (SELECT Products.id FROM Products WHERE Products.id = Visit.product_id))'), 'projectscount']
+                            [sequelize.literal('(SELECT COUNT(*) FROM recommandations WHERE recommandations.visit_id = Visit.id)'), 'recommandationscount'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = (SELECT products.id FROM products WHERE products.id = Visit.product_id))'), 'projectscount']
                         ]
                     },
 
@@ -668,7 +669,7 @@ module.exports = function(sequelize, DataTypes) {
                             as: 'product',
 
                             attributes: {
-                                include: [[sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id)'), 'projectscount']]
+                                include: [[sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'projectscount']]
                             },
 
                             include: [{

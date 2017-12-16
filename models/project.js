@@ -1228,7 +1228,9 @@ module.exports = function(sequelize, DataTypes) {
         
 
     }, {
-        //timestamps: false,
+        timestamps: false,
+
+        tableName: 'projects',
 
         hooks: {
 			afterUpdate: function (instance, options) {
@@ -1268,21 +1270,21 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_projectscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste AND Projects.statut = "Opérationnel")'), 'porteur_projectscount_operationnels'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste AND Projects.en_cours = TRUE)'), 'porteur_projectscount_encours'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste AND Projects.en_souffrance = TRUE)'), 'porteur_projectscount_ensouffrance'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_projectscount'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste AND projects.statut = "Opérationnel")'), 'porteur_projectscount_operationnels'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste AND projects.en_cours = TRUE)'), 'porteur_projectscount_encours'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste AND projects.en_souffrance = TRUE)'), 'porteur_projectscount_ensouffrance'],
 
-                            [sequelize.literal('(SELECT SUM(part_INDH) FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_INDH_contributions'],
-                            [sequelize.literal('(SELECT GROUP_CONCAT(annee ORDER BY id ASC SEPARATOR " | ")  FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_annees_projets'],
-                            [sequelize.literal('(SELECT GROUP_CONCAT(statut ORDER BY id ASC SEPARATOR " | ")  FROM Projects WHERE Projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_statuts_projets']
+                            [sequelize.literal('(SELECT SUM(part_INDH) FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_INDH_contributions'],
+                            [sequelize.literal('(SELECT GROUP_CONCAT(annee ORDER BY id ASC SEPARATOR " | ")  FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_annees_projets'],
+                            [sequelize.literal('(SELECT GROUP_CONCAT(statut ORDER BY id ASC SEPARATOR " | ")  FROM projects WHERE projects.porteur_ajuste = Project.porteur_ajuste)'), 'porteur_statuts_projets']
                         ]
                     },
 
                     include: [{
                         model: models.Product,
                         as: 'product'
-                    }/*, {
+                    }, {
                         model: models.Project,
                         as: 'parent'
                     }, {
@@ -1300,7 +1302,7 @@ module.exports = function(sequelize, DataTypes) {
                     }, {
                         model: models.Contribution,
                         as: 'contributions'
-                    }*/]
+                    }]
                 });
             }
         }

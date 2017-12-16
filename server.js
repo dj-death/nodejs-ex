@@ -1,20 +1,8 @@
 //  OpenShift sample Node application
 var express = require('express'),
-	http = require('http'),
-	
-	config = require('./config.json'),
-	cron = require('node-cron'),
-	cors = require('cors'),
-	merge = require('deepmerge'),
-	favicon = require('serve-favicon'),
-	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-	formidable = require('formidable'),
-	fs = require('fs'),
-	path = require('path'),
-	direct = require('extdirect'),
     app     = express(),
     morgan  = require('morgan');
+<<<<<<< HEAD
 	
 var models = require('./models');
 var helpers = require('./utils/helpers.js');
@@ -56,31 +44,42 @@ var sequelize2 = new Sequelize("sse" /*'information_schema'*/, 'root', 'didi', {
 /**
  * Event listener for HTTP server "error" event.
  */
+=======
+    
+Object.assign=require('object-assign')
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+app.engine('html', require('ejs').renderFile);
+app.use(morgan('combined'))
+>>>>>>> parent of aa016b9... initial
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURLLabel = "";
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
+if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
+  var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
+      mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
+      mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
+      mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
+      mongoPassword = process.env[mongoServiceName + '_PASSWORD']
+      mongoUser = process.env[mongoServiceName + '_USER'];
+
+  if (mongoHost && mongoPort && mongoDatabase) {
+    mongoURLLabel = mongoURL = 'mongodb://';
+    if (mongoUser && mongoPassword) {
+      mongoURL += mongoUser + ':' + mongoPassword + '@';
+    }
+    // Provide UI label that excludes user id and pw
+    mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+    mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+
   }
 }
+var db = null,
+    dbDetails = new Object();
 
+<<<<<<< HEAD
 /**
  * Event listener for HTTP server "listening" event.
  */
@@ -103,11 +102,15 @@ config["direct"]["server"] = "api-sse.193b.starter-ca-central-1.openshiftapps.co
 
 
 config.client.path = path.join(config.client.path, 'build', 'production', 'App');
+=======
+var initDb = function(callback) {
+  if (mongoURL == null) return;
+>>>>>>> parent of aa016b9... initial
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+  var mongodb = require('mongodb');
+  if (mongodb == null) return;
 
+<<<<<<< HEAD
 //app.use(logger('dev'));
 //app.use(morgan('combined'))
 app.use(bodyParser.json());
@@ -166,23 +169,42 @@ app.get(config.direct.apiUrl, function(req, res, next) {
       err.message = exception;
       err.status = 500;
       next(err);
+=======
+  mongodb.connect(mongoURL, function(err, conn) {
+    if (err) {
+      callback(err);
+      return;
+>>>>>>> parent of aa016b9... initial
     }
+
+    db = conn;
+    dbDetails.databaseName = db.databaseName;
+    dbDetails.url = mongoURLLabel;
+    dbDetails.type = 'MongoDB';
+
+    console.log('Connected to MongoDB at: %s', mongoURL);
+  });
+};
+
+app.get('/', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var col = db.collection('counts');
+    // Create a document with request IP and current time of request
+    col.insert({ip: req.ip, date: Date.now()});
+    col.count(function(err, count){
+      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+    });
+  } else {
+    res.render('index.html', { pageCountMessage : null});
+  }
 });
 
-// ignoring any GET requests on class path
-app.get(config.direct.classRouteUrl, function(req, res, next) {
-    var err = new Error('Internal Server Error');
-    err.message = 'Unsupported method. Use POST instead.';
-    err.status = 500;
-    next(err);
-});
-
-
-// POST request process route and calls class
-app.post(config.direct.classRouteUrl, function(req, res) {
-    directRouter.processRoute(req, res);
-});
-
+<<<<<<< HEAD
 if (config.server.uploadEnabled) {
 
     app.post('/upload', function(req, res) {
@@ -237,51 +259,38 @@ if (config.server.uploadEnabled) {
             global.uploadName = uploadName;
         });
 
+=======
+app.get('/pagecount', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    db.collection('counts').count(function(err, count ){
+      res.send('{ pageCount: ' + count + '}');
+>>>>>>> parent of aa016b9... initial
     });
-
-}
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  } else {
+    res.send('{ pageCount: -1 }');
+  }
 });
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+// error handling
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.status(500).send('Something bad happened!');
 });
-    
 
-/**
- * Create HTTP server.
- */
+initDb(function(err){
+  console.log('Error connecting to Mongo. Message:\n'+err);
+});
 
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
+app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
-// schedule dataset reset
-cron.schedule(config.cron.reset, function() {
-	data.sync();
-});
-
-// populate initial data
-data.sync();
-
+<<<<<<< HEAD
 module.exports = app;
+=======
+module.exports = app ;
+>>>>>>> parent of aa016b9... initial

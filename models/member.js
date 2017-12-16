@@ -52,6 +52,7 @@ module.exports = function(sequelize, DataTypes) {
         
         
     }, {
+        tableName: 'members',
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Partner, { as: 'partner' });

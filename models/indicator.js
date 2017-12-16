@@ -63,6 +63,7 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     },{
+        tableName: 'indicators',
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Project, { as: 'project', constraints: true });

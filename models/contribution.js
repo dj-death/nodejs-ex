@@ -59,6 +59,7 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     },{
+        tableName: 'contributions',
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Project, { as: 'project', constraints: true });
