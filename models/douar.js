@@ -278,17 +278,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         
         classMethods: {
-            associate: function(models) {
-                Model.belongsTo(models.Person, { as: 'recipient', constraints: false });
-
-                Model.belongsTo(models.Person);
-                Model.addScope('nested', {
-                    include: [{
-                        model: models.Person,
-                        as: 'recipient'
-                    }]
-                });
-            }
+           
         }
     });
 
