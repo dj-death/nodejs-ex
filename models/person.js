@@ -75,10 +75,6 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     }, {
-		
-		freezeTableName: true,
-		tableName: 'people',
-		
         defaultScope: {
             attributes: {
                 exclude: ['password']

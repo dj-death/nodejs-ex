@@ -29,11 +29,15 @@ var Service = {
     },
 
     insert: function(params, callback, sid, req) {
+        var product;
+
         session.verify(req).then(function(session) {
             if (session.user.get('role') > 1) {
                 callback(new Error('Not authorized'));
                 return;
             }
+
+            delete params.id;
 
             return models.Visit.create(params);
         }).then(function(row) {
@@ -44,13 +48,36 @@ var Service = {
                 where: {
                     id: params.product_id
                 }
-            }).then(function(product) {
+            }).then(function(result) {
+                product = result;
+
                 if (!product) {
                     throw errors.types.invalidParams({
                         path: 'id', message: 'Product with the specified id cannot be found',
                     });
                 }
+
+                return models.Visit.findAll({
+                    where: {
+                        product_id: params.product_id
+                    },
+
+                    limit: 1,
+
+                    order: [
+                        // Will escape username and validate DESC against a list of valid direction parameters
+                        ['startDate', 'DESC']
+                    ]
+                });
+
+            }).then(function (lastVisit) {
+                lastVisit = lastVisit[0];
                 
+                if (lastVisit.get('startDate') > params.startDate) {
+                    console.log('not a recent visit');
+                    return ;
+                }
+
                 models.Risk.findAll({
                     where: {
                         id: {
@@ -66,8 +93,16 @@ var Service = {
 
                     return product.setRisks(risks);
                 }).then(function () {
-                    callback(null, { data: row });
-                })
+            
+                    models.Project.update(params, {
+                        where: {
+                            product_id: params.product_id
+                        }
+                    }).then(function(results) {
+                        callback(null, { data: row });
+                    });
+
+                });
 
             });
 
@@ -147,17 +182,40 @@ var Service = {
             return row.update(params);
 
         }).then(function(visitRow) {
-            var risksIds = params.risks_list;
             visitRecord = visitRow;
 
+            return models.Visit.findAll({
+                where: {
+                    product_id: visitRecord.get('product_id')
+                },
+
+                limit: 1,
+
+                order: [
+                    // Will escape username and validate DESC against a list of valid direction parameters
+                    ['startDate', 'DESC']
+                ]
+            });
+
+        }).then(function (lastVisit) {
+            lastVisit = lastVisit[0];
+
+            if (lastVisit.get('startDate') > visitRecord.get('startDate')) {
+                console.log('not a recent visit');
+                return visitRecord;
+            }
+
+            var risksIds = params.risks_list;
+            
+
             if (!risksIds || !risksIds.length) {
-                return visitRow;
+                return visitRecord;
             }
 
             // load product
             return models.Product.findOne({
                 where: {
-                    id: visitRow.get('product_id')
+                    id: visitRecord.get('product_id')
                 }
             }).then(function(product) {
                 if (!product) {
@@ -182,7 +240,16 @@ var Service = {
                     return product.setRisks(risks);
                 });
 
-            });
+            }).then(function () {
+                delete params.id;
+
+                return models.Project.update(params, {
+                        where: {
+                            product_id: params.product_id
+                        }
+                    });
+
+                });
 
         }).then(function() {
             // reload record data in case associations have been updated.

@@ -8,10 +8,10 @@ var models = require('../models');
 var Service = {
     list: function(params, callback, sid, req) {
         session.verify(req).then(function(session) {
-            /*if (session.user.get('role') > 3) {
+            if (session.user.get('role') > 3) {
                 callback(new Error('Not authorized'));
                 return;
-            }*/
+            }
 
             return models.Partner.scope('nested').findAndCount(
                 helpers.sequelizify(params, models.Partner));

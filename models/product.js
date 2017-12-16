@@ -136,7 +136,7 @@ module.exports = function(sequelize, DataTypes) {
         },
 
         tarif_moyen: {
-            type: DataTypes.DECIMAL(13, 4),
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: true
         },
 
@@ -276,9 +276,6 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     }, {
-		freezeTableName: true,
-		tableName: 'products',
-		
         timestamps: false,
 
         classMethods: {
@@ -293,10 +290,10 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'projectscount'],
-                            [sequelize.literal('(SELECT SUM(montant_global) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'montant_global'],
-                            [sequelize.literal('(SELECT SUM(part_INDH) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'part_INDH'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM visits WHERE visits.product_id = Product.id)'), 'visitscount']
+                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id)'), 'projectscount'],
+                            [sequelize.literal('(SELECT SUM(montant_global) FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id)'), 'montant_global'],
+                            [sequelize.literal('(SELECT SUM(part_INDH) FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id)'), 'part_INDH'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM Visits WHERE Visits.product_id = Product.id)'), 'visitscount']
                              
                             //[sequelize.literal('(SELECT GROUP_CONCAT(objectifs SEPARATOR "<hr/>") as consistance FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id GROUP BY product_id)'), 'consistance']
                         ]

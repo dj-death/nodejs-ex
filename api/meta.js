@@ -8,30 +8,11 @@ var path = require("path");
 
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
+var config = require(path.join(__dirname, '..', 'config.json')).database;
 
-var sequelize2 = new Sequelize('information_schema', 'root', 'didi', {
-	"dialect": "mysql",
-	"username": "root",
-	"password": "didi",
-	
-	"database": "information_schema",
-	"host": "mysql",
-	"port": "3306",
-	"pool": {
-		"max": 50,
-		"min": 0,
-		"idle": 10000
-	},
-	
-	"logging": false,
-	"define": {
-		"createdAt": "created",
-		"updatedAt": "updated",
-		"deletedAt": "deleted",
-		"underscored": true
-	}
-});
+config['database'] = "information_schema";
 
+var sequelize2 = new Sequelize(config.database, config.username, config.password, config);
 
 var Service = {
     list: function(params, callback, sid, req) {

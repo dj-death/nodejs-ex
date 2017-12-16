@@ -54,17 +54,14 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
-		freezeTableName: true,
-		tableName: 'missions',
-		
         classMethods: {
             associate: function(models) {
                 // http://stackoverflow.com/a/37817966
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM visits WHERE visits.mission_id = Mission.id)'), 'visitscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id IN (SELECT products.id FROM products WHERE products.id IN (SELECT visits.product_id FROM visits WHERE visits.mission_id = Mission.id )))'), 'projectscount']
+                            [sequelize.literal('(SELECT COUNT(*) FROM Visits WHERE Visits.mission_id = Mission.id)'), 'visitscount'],
+                            [sequelize.literal('(SELECT COUNT(*) FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id IN (SELECT Products.id FROM Products WHERE Products.id IN (SELECT Visits.product_id FROM Visits WHERE Visits.mission_id = Mission.id )))'), 'projectscount']
                         ]
                     }
                  });
