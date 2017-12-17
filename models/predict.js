@@ -32,7 +32,10 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     }, {
-        tableName: 'predicts',
+		
+		freezeTableName: true,
+		tableName: 'predicts',
+		
         classMethods: {
 
         }

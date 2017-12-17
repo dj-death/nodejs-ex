@@ -52,10 +52,12 @@ module.exports = function(sequelize, DataTypes) {
         
         
     }, {
-        tableName: 'members',
+		freezeTableName: true,
+		tableName: 'members',
+		
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Partner, { as: 'partner' , constraints: false });
+                Model.belongsTo(models.Partner, { as: 'partner' });
 
                 Model.addScope('nested', {
                     include: [

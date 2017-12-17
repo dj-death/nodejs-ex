@@ -18,93 +18,94 @@ module.exports = function(sequelize, DataTypes) {
         },
 
         CA_prevu: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         CA_reel: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         resultat_net_reel: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         resultat_net_prevu: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         BFR: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         capitaux_propres: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         dettes_MLT: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         dettes_CT: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         immobilisations: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         creances: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         stocks: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         tresorerie: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         total_subventions: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         loyer: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         total_depenses: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         total_recettes: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         },
 
         solde: {
-            type: DataTypes.DECIMAL(13, 2),
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: true
         }
 
     },{
-        
-        tableName: 'productfinances',        
+		freezeTableName: true,
+		tableName: 'productfinances',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Product, { as: 'product' });

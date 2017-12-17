@@ -642,9 +642,11 @@ module.exports = function(sequelize, DataTypes) {
         }
 
 
-
     }, {
-        tableName: 'visits',
+		
+		freezeTableName: true,
+		tableName: 'visits',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Mission, { as: 'mission', constraints: false });
@@ -669,7 +671,7 @@ module.exports = function(sequelize, DataTypes) {
                             as: 'product',
 
                             attributes: {
-                                include: [[sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'projectscount']]
+                                include: [[sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = product.id)'), 'projectscount']]
                             },
 
                             include: [{

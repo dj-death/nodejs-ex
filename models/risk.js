@@ -43,8 +43,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     }, {
-        tableName: 'risks',
-
+		freezeTableName: true,
+		tableName: 'risks',
+		
         classMethods: {
             associate: function(models) {
                 Model.belongsToMany(models.Product, {through: models.RiskProducts, as: 'products'});
@@ -53,7 +54,7 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM riskproducts WHERE riskproducts.risk_id = Risk.id)'), 'productscount']
+                            [sequelize.literal('(SELECT COUNT(*) FROM riskproducts WHERE riskproducts.risk_id = risk.id)'), 'productscount']
                         ]
                     },
                     include: [{

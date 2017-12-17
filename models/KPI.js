@@ -44,10 +44,12 @@ module.exports = function(sequelize, DataTypes) {
 
         
     },{
-        tableName: 'kpis',
+		freezeTableName: true,
+		tableName: 'kpis',
+		
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Product, { as: 'product', constraints: false });
+                Model.belongsTo(models.Product, { as: 'product' });
 
                 Model.addScope('nested', {
                     include: [

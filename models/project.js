@@ -1225,12 +1225,16 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true
         }
+
+        
+
         
 
     }, {
         timestamps: false,
-
-        tableName: 'projects',
+		
+		freezeTableName: true,
+		tableName: 'projects',
 
         hooks: {
 			afterUpdate: function (instance, options) {
@@ -1259,12 +1263,12 @@ module.exports = function(sequelize, DataTypes) {
                 Model.belongsTo(models.Product, { as: 'product', constraints: false });
                 Model.belongsTo(models.Project, { as: 'parent', constraints: false });
 
-                Model.hasOne(models.Impact, { as: 'impact', constraints: false });
-                Model.hasOne(models.Indicator, { as: 'indicator', constraints: false });
+                Model.hasOne(models.Impact, { as: 'impact'});
+                Model.hasOne(models.Indicator, { as: 'indicator'});
 
-                Model.hasMany(models.Prestation, { as: 'prestations', constraints: false });
-                Model.hasMany(models.Beneficiaire, { as: 'beneficiaires', constraints: false });
-                Model.hasMany(models.Contribution, { as: 'contributions', constraints: false });
+                Model.hasMany(models.Prestation, { as: 'prestations'});
+                Model.hasMany(models.Beneficiaire, { as: 'beneficiaires'});
+                Model.hasMany(models.Contribution, { as: 'contributions'});
 
                 // http://stackoverflow.com/a/37817966
                 Model.addScope('nested', {

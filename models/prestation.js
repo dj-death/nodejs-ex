@@ -28,10 +28,12 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
-        tableName: 'prestations',
+		freezeTableName: true,
+		tableName: 'prestations',
+		
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Project, { as: 'project', constraints: false });
+                Model.belongsTo(models.Project, { as: 'project', constraints: true });
             }
         }
     });

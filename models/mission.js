@@ -54,7 +54,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
-        tableName: 'missions',
+		freezeTableName: true,
+		tableName: 'missions',
+		
         classMethods: {
             associate: function(models) {
                 // http://stackoverflow.com/a/37817966
@@ -62,7 +64,7 @@ module.exports = function(sequelize, DataTypes) {
                     attributes: {
                         include: [
                             [sequelize.literal('(SELECT COUNT(*) FROM visits WHERE visits.mission_id = Mission.id)'), 'visitscount'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id IN (SELECT products.id FROM Products WHERE products.id IN (SELECT visits.product_id FROM visits WHERE visits.mission_id = Mission.id )))'), 'projectscount']
+                            [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id IN (SELECT products.id FROM products WHERE products.id IN (SELECT visits.product_id FROM visits WHERE visits.mission_id = Mission.id )))'), 'projectscount']
                         ]
                     }
                  });

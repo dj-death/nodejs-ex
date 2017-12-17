@@ -276,14 +276,16 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     }, {
+		freezeTableName: true,
+		tableName: 'products',
+		
         timestamps: false,
-        tableName: 'products',
 
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Partner, { as: 'partner', constraints: false });
-                Model.hasMany(models.Project, { as: 'projects', constraints: false });
-                Model.hasMany(models.Visit, { as: 'visits', constraints: false });
+                Model.hasMany(models.Project, { as: 'projects'});
+                Model.hasMany(models.Visit, { as: 'visits'});
 
                 Model.belongsToMany(models.Risk, {through: models.RiskProducts, as: 'risks'});
 
@@ -296,7 +298,7 @@ module.exports = function(sequelize, DataTypes) {
                             [sequelize.literal('(SELECT SUM(part_INDH) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'part_INDH'],
                             [sequelize.literal('(SELECT COUNT(*) FROM visits WHERE visits.product_id = Product.id)'), 'visitscount']
                              
-                            //[sequelize.literal('(SELECT GROUP_CONCAT(objectifs SEPARATOR "<hr/>") as consistance FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id GROUP BY product_id)'), 'consistance']
+                            //[sequelize.literal('(SELECT GROUP_CONCAT(objectifs SEPARATOR "<hr/>") as consistance FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id GROUP BY product_id)'), 'consistance']
                         ]
                     },
                     include: [{

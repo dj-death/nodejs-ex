@@ -310,7 +310,9 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     },{
-        tableName: 'Partners',
+		freezeTableName: true,
+		tableName: 'partners',
+		
         classMethods: {
             associate: function(models) {
                 Model.hasMany(models.Product, { as: 'products'});

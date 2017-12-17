@@ -63,10 +63,12 @@ module.exports = function(sequelize, DataTypes) {
         }
         
     },{
-        tableName: 'indicators',
+		freezeTableName: true,
+		tableName: 'indicators',
+		
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Project, { as: 'project', constraints: false });
+                Model.belongsTo(models.Project, { as: 'project', constraints: true });
 
                 /*Model.addScope('nested', {
                     include: [
