@@ -47,7 +47,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'kpis',
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Product, { as: 'product' });
+                Model.belongsTo(models.Product, { as: 'product', constraints: false });
 
                 Model.addScope('nested', {
                     include: [

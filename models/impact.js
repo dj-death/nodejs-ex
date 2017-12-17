@@ -113,7 +113,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'impacts',
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Project, { as: 'project', constraints: true });
+                Model.belongsTo(models.Project, { as: 'project', constraints: false });
             }
         }
     });

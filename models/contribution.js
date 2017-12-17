@@ -62,7 +62,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'contributions',
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Project, { as: 'project', constraints: true });
+                Model.belongsTo(models.Project, { as: 'project', constraints: false });
 
                 /*Model.addScope('nested', {
                     include: [

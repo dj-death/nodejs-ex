@@ -1259,12 +1259,12 @@ module.exports = function(sequelize, DataTypes) {
                 Model.belongsTo(models.Product, { as: 'product', constraints: false });
                 Model.belongsTo(models.Project, { as: 'parent', constraints: false });
 
-                Model.hasOne(models.Impact, { as: 'impact'});
-                Model.hasOne(models.Indicator, { as: 'indicator'});
+                Model.hasOne(models.Impact, { as: 'impact', constraints: false });
+                Model.hasOne(models.Indicator, { as: 'indicator', constraints: false });
 
-                Model.hasMany(models.Prestation, { as: 'prestations'});
-                Model.hasMany(models.Beneficiaire, { as: 'beneficiaires'});
-                Model.hasMany(models.Contribution, { as: 'contributions'});
+                Model.hasMany(models.Prestation, { as: 'prestations', constraints: false });
+                Model.hasMany(models.Beneficiaire, { as: 'beneficiaires', constraints: false });
+                Model.hasMany(models.Contribution, { as: 'contributions', constraints: false });
 
                 // http://stackoverflow.com/a/37817966
                 Model.addScope('nested', {

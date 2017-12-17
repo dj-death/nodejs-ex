@@ -55,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'members',
         classMethods: {
             associate: function(models) {
-                Model.belongsTo(models.Partner, { as: 'partner' });
+                Model.belongsTo(models.Partner, { as: 'partner' , constraints: false });
 
                 Model.addScope('nested', {
                     include: [

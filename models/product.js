@@ -282,8 +282,8 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 Model.belongsTo(models.Partner, { as: 'partner', constraints: false });
-                Model.hasMany(models.Project, { as: 'projects'});
-                Model.hasMany(models.Visit, { as: 'visits'});
+                Model.hasMany(models.Project, { as: 'projects', constraints: false });
+                Model.hasMany(models.Visit, { as: 'visits', constraints: false });
 
                 Model.belongsToMany(models.Risk, {through: models.RiskProducts, as: 'risks'});
 
