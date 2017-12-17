@@ -25,7 +25,7 @@
         "apiUrl": "/api",
         "classRouteUrl": "/api",
         "classPath": "/api",
-        "server": "api-sse.193b.starter-ca-central-1.openshiftapps.com",
+        "server": "rest-taqyem.1d35.starter-us-east-1.openshiftapps.com",
         "port": "80",
         "protocol": "http",
         "timeout": 30000,

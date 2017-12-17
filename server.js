@@ -99,7 +99,7 @@ debug('Listening on ' + bind);
 var data = require('./utils/data.js');
 
 // Override main config (config.json) with potential local config (config.local.json): that's
-config["direct"]["server"] = "api-sse.193b.starter-ca-central-1.openshiftapps.com";
+config["direct"]["server"] = "rest-taqyem.1d35.starter-us-east-1.openshiftapps.com";
 
 
 config.client.path = path.join(config.client.path, 'build', 'production', 'App');
