@@ -195,7 +195,7 @@ if (config.server.uploadEnabled) {
       form.keepExtensions = true;
 
       // store all uploads in the /uploads directory
-      form.uploadDir = path.join(process.env.OPENSHIFT_DATA_DIR || "/app-root/data/", config.server.fileUploadFolder);
+      form.uploadDir = path.join(process.env.OPENSHIFT_DATA_DIR || "/opt/app-root/src/", config.server.fileUploadFolder);
 
       form.parse(req, function (err, fields, files) {
 
