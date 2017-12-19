@@ -37,7 +37,16 @@ module.exports = function(sequelize, DataTypes) {
                 return JSON.parse(this.getDataValue('location'));
             },
             set: function (value) {
-                return this.setDataValue('location', JSON.stringify(value));
+				if (typeof value == 'object') {
+					try {
+						var coords = JSON.stringify(value);
+						
+						this.setDataValue('location', coords);
+					} catch (e) {
+						console.log(e);
+					}
+				}
+  
             }
         },
 
