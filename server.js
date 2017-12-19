@@ -27,31 +27,6 @@ var debug = require('debug')('server:server');
 app.set('port', port);
 
 
-var Sequelize = require("sequelize");
-
-var sequelize2 = new Sequelize("sse" /*'information_schema'*/, 'root', 'didi', {
-"dialect": "mysql",
-"username": "root",
-"password": "didi",
-
-"database": "sse", //"information_schema",
-"host": "mysql",
-"port": "3306",
-"pool": {
-  "max": 50,
-  "min": 0,
-  "idle": 10000
-},
-
-"logging": false,
-"define": {
-  "createdAt": "created",
-  "updatedAt": "updated",
-  "deletedAt": "deleted",
-  "underscored": true
-}
-});
-
 
 /**
 * Event listener for HTTP server "error" event.
@@ -102,11 +77,11 @@ var data = require('./utils/data.js');
 config["direct"]["server"] = "rest-taqyem.1d35.starter-us-east-1.openshiftapps.com";
 
 
-config.client.path = path.join(config.client.path, 'build', 'production', 'App');
+//config.client.path = path.join(config.client.path, 'build', 'production', 'App');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+/*app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');*/
 
 //app.use(logger('dev'));
 //app.use(morgan('combined'))
@@ -115,7 +90,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.resolve(__dirname, config.client.path)));
+//app.use(express.static(path.resolve(__dirname, config.client.path)));
 
 // CORS
 if (config.cors && config.cors.enabled) {
@@ -129,9 +104,37 @@ var directRouter = direct.initRouter(config.direct);
 
 //MySQL is running!
 app.get('/mysql', function(req, res) {
-  
+	  
+	/*var Sequelize = require("sequelize");
 
-/*return sequelize2.query('SELECT TABLE_NAME as "tablename", UPDATE_TIME as "update_time", UPDATE_TIME as "create_time" FROM tables WHERE TABLE_SCHEMA = "sse" ')
+	var sequelize2 = new Sequelize("sse" 
+	//'information_schema'
+	, 'root', 'didi', {
+	"dialect": "mysql",
+	"username": "root",
+	"password": "didi",
+
+	"database": "sse", //"information_schema",
+	"host": "mysql",
+	"port": "3306",
+	"pool": {
+	  "max": 50,
+	  "min": 0,
+	  "idle": 10000
+	},
+
+	"logging": false,
+	"define": {
+	  "createdAt": "created",
+	  "updatedAt": "updated",
+	  "deletedAt": "deleted",
+	  "underscored": true
+	}
+	});
+
+
+
+return sequelize2.query('SELECT TABLE_NAME as "tablename", UPDATE_TIME as "update_time", UPDATE_TIME as "create_time" FROM tables WHERE TABLE_SCHEMA = "sse" ')
 .then(function(result) {
   var data = result[0];
   

@@ -296,9 +296,7 @@ module.exports = function(sequelize, DataTypes) {
                             [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'projectscount'],
                             [sequelize.literal('(SELECT SUM(montant_global) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'montant_global'],
                             [sequelize.literal('(SELECT SUM(part_INDH) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = Product.id)'), 'part_INDH'],
-                            [sequelize.literal('(SELECT COUNT(*) FROM visits WHERE visits.product_id = Product.id)'), 'visitscount']
-                             
-                            //[sequelize.literal('(SELECT GROUP_CONCAT(objectifs SEPARATOR "<hr/>") as consistance FROM Projects WHERE Projects.est_sousprojet = FALSE AND Projects.product_id = Product.id GROUP BY product_id)'), 'consistance']
+                            [sequelize.literal('(SELECT COUNT(*) FROM visits WHERE visits.product_id = Product.id)'), 'visitscount']                             
                         ]
                     },
                     include: [{

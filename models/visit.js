@@ -471,7 +471,7 @@ module.exports = function(sequelize, DataTypes) {
         problemes_porteur: {
             type: DataTypes.TEXT,
             allowNull: true
-        },
+        }/*,
 
         
         tx_pertinence: {
@@ -639,7 +639,7 @@ module.exports = function(sequelize, DataTypes) {
         pertinence_q11_valeurs_cibles: {
             type: DataTypes.BOOLEAN,
             allowNull: true
-        }
+        }*/
 
 
     }, {
@@ -657,7 +657,7 @@ module.exports = function(sequelize, DataTypes) {
                 Model.addScope('nested', {
                     attributes: {
                         include: [
-                            [sequelize.literal('(SELECT COUNT(*) FROM recommandations WHERE recommandations.visit_id = Visit.id)'), 'recommandationscount'],
+                            //[sequelize.literal('(SELECT COUNT(*) FROM recommandations WHERE recommandations.visit_id = Visit.id)'), 'recommandationscount'],
                             [sequelize.literal('(SELECT COUNT(*) FROM projects WHERE projects.est_sousprojet = FALSE AND projects.product_id = (SELECT products.id FROM products WHERE products.id = Visit.product_id))'), 'projectscount']
                         ]
                     },
