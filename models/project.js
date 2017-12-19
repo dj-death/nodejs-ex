@@ -34,7 +34,9 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: true,
             get: function () {
-                return JSON.parse(this.getDataValue('location'));
+		    var val = this.getDataValue('location');
+                try {   return val && JSON.parse(val);} catch(e) { return null; }
+			
             },
             set: function (value) {
 				if (typeof value == 'object') {
