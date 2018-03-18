@@ -287,4 +287,94 @@ data.sync();
 // populate initial data
 data.sync();
 
+
+
+
+var restify = require('restify');
+var pushServer = restify.createServer({
+    name : 'pushServer'
+});
+
+
+var apns = require('apns');
+var gcm = require('node-gcm');
+
+var options = {
+    keyFile  : 'domain.key',
+    certFile : 'domain.csr',
+    debug    : true,
+    gateway  : 'gateway.sandbox.push.apple.com',
+    errorCallback : function(num, err) {
+        console.error(err);
+    }
+};
+
+function sendIos(deviceId) {
+    let connection = new apns.Connection(options);
+
+    let notification = new apns.Notification();
+    notification.device = new apns.Device(deviceId);
+    notification.alert = 'Hello World !';
+
+    connection.sendNotification(notification);
+}
+
+
+function sendAndroid(devices) {
+    let message = new gcm.Message({
+        notification : {
+            title : 'Hello, World!'
+        }
+    });
+
+    let sender = new gcm.sender('TAQYEMBYDIDI');
+
+    sender.send(message, {
+        registrationTokens : devices
+    }, function(err, response) {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log(response);
+        }
+    });
+}
+
+pushServer.use(restify.plugins.bodyParser());
+
+pushServer.post('/register', (req, res, next) => {
+    let body = JSON.parse(req.body);
+
+    if (body) {
+        return models.Device.create(body).then(function(row) {
+            res.send(200);
+
+        }).catch(function(err) {
+            res.send(500);
+        });
+    }
+});
+
+pushServer.get('/send', (req, res) => {
+    return models.Device.findAll().then(function(results) {
+        let androidDevices = [];
+
+        devices.forEach(device => {
+            if (device.platform === 'ios') {
+                sendIos(device.deviceId);
+            } else if (device.platform === 'android') {
+                androidDevices.push(device.deviceId);
+            }
+        });
+
+        sendAndroid(androidDevices);
+
+        res.send(200);
+
+    }).catch(function(err) {
+        res.send(500);
+    });
+
+});
+
 module.exports = app;
