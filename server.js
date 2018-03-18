@@ -299,6 +299,15 @@ var pushServer = restify.createServer({
 var apns = require('apns');
 var gcm = require('node-gcm');
 
+// Replace these with your own values.
+var apiKey = "AAAAO21PC5I:APA91bH-2U7kzg8UnphSxf86uV0vC6fg4b_7VfTGmElO0njyhs25DNk_vvCqOiRheSEjoExBnLMH5IuH5bxw-HorM0ktvzwsGlzukfM6baqktEg5Nya-6qetsh6xv5yfbC6qjuTi1rcS";
+var deviceID = "Device's Registration ID";
+
+service.send(message, { registrationTokens: [ deviceID ] }, function (err, response) {
+	if(err) console.error(err);
+	else 	console.log(response);
+});
+
 var options = {
     keyFile  : 'domain.key',
     certFile : 'domain.csr',
@@ -321,13 +330,13 @@ function sendIos(deviceId) {
 
 
 function sendAndroid(devices) {
-    let message = new gcm.Message({
-        notification : {
-            title : 'Hello, World!'
-        }
-    });
+    
+    let sender = new gcm.sender(apiKey);
+	
+	var message = new gcm.Message();
+	message.addData('title', 'Hello, World');
+	message.addData('body', 'This is a notification that will be displayed ASAP.');
 
-    let sender = new gcm.sender('TAQYEMBYDIDI');
 
     sender.send(message, {
         registrationTokens : devices
