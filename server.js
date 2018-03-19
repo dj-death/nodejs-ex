@@ -315,9 +315,9 @@ var options = {
 
 function sendAndroid(devices) {
     
-    let sender = new gcm.sender(apiKey);
+    var sender = new gcm.sender(apiKey);
 	
-	let message = new gcm.Message({
+	var message = new gcm.Message({
         notification : {
             title : 'Hello, World!'
         }
@@ -338,7 +338,7 @@ function sendAndroid(devices) {
 pushServer.use(restify.plugins.bodyParser());
 
 pushServer.post('/register', (req, res, next) => {
-    let body = JSON.parse(req.body);
+    var body = JSON.parse(req.body);
 
     if (body) {
         return models.Device.create(body).then(function(row) {
@@ -352,7 +352,7 @@ pushServer.post('/register', (req, res, next) => {
 
 pushServer.get('/send', (req, res) => {
     return models.Device.findAll().then(function(results) {
-        let androidDevices = [];
+        var androidDevices = [];
 
         devices.forEach(device => {
             if (device.platform === 'android') {
