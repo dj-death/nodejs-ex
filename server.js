@@ -296,7 +296,6 @@ var pushServer = restify.createServer({
 });
 
 
-var apns = require('apns');
 var gcm = require('node-gcm');
 
 // Replace these with your own values.
@@ -313,24 +312,16 @@ var options = {
     }
 };
 
-function sendIos(deviceId) {
-    let connection = new apns.Connection(options);
-
-    let notification = new apns.Notification();
-    notification.device = new apns.Device(deviceId);
-    notification.alert = 'Hello World !';
-
-    connection.sendNotification(notification);
-}
-
 
 function sendAndroid(devices) {
     
     let sender = new gcm.sender(apiKey);
 	
-	var message = new gcm.Message();
-	message.addData('title', 'Hello, World');
-	message.addData('body', 'This is a notification that will be displayed ASAP.');
+	let message = new gcm.Message({
+        notification : {
+            title : 'Hello, World!'
+        }
+    });
 
 
     sender.send(message, {
@@ -364,9 +355,7 @@ pushServer.get('/send', (req, res) => {
         let androidDevices = [];
 
         devices.forEach(device => {
-            if (device.platform === 'ios') {
-                sendIos(device.deviceId);
-            } else if (device.platform === 'android') {
+            if (device.platform === 'android') {
                 androidDevices.push(device.deviceId);
             }
         });
